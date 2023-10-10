@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Snapchat Camera Kit for Web Workshop</title>
+  <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+  <link rel="stylesheet" href="index.css">
+</head>
+<body style="overflow: auto;">
+
+  <div class="container">
+    <img src="./assets/snapchat-logo.svg" alt="Snapchat Logo">
+    <h1 style="text-align: center;">WebAR Workshop: Creating AR with Camera Kit for Web @ Snap AR Studio</h1>
+    <p class="text-content">Thursday, October 12 · 3 - 6pm CEST</p>
+    <p class="text-content">STATION F, 5 Parv. Alan Turing, 75013 Paris</p>
+
+    <p>This page contains a list of links to resources that you will need during the workshop. Please feel free to bookmark this page or open it in a new tab so that you can easily access it during the workshop.</p>
+
+    <h2>Content needed for the workshop</h2>
+
+    <h3>Create your account on</h3>
+    <div style="text-align: center;">
+      <ul>
+        <li><a href="https://accounts.snapchat.com/accounts/welcome" target="_blank">Snapchat</a></li>
+        <li><a href="https://github.com/join" target="_blank">Github</a></li>
+      </ul>
+    </div>
+
+    <h3>Download resources</h3>
+    <div style="text-align: center;">
+      <ul>
+        <li><a href="https://ar.snap.com/download" target="_blank">Lens Studio</a></li>
+        <li><a href="https://desktop.github.com/" target="_blank">Github</a></li>
+        <li><a href="https://code.visualstudio.com/download" target="_blank">Visual Studio Code</a></li>
+        <li><a href="https://nodejs.org/en/download" target="_blank">Node.Js</a></li>
+        <li><a href="https://drive.google.com/file/d/1_zKtc84XeVf22HXMBMJontBRIxAS2jC2/view?usp=sharing" target="_blank">Project Content</a></li>
+      </ul>
+    </div>
+
+    <p>Have fun and learn a lot!</p>
+    <div id="myEmbeddedScene" style="height: 500px; width: 100vw;">
+        <a-scene embedded vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
+             <a-assets>
+                <a-asset-item id="cityModel" src="./assets/scene.glb"></a-asset-item>
+              </a-assets>
+              <a-entity rotation="20 0 0" position="0 -25 -150"
+              >
+                <a-entity custom gltf-model="#cityModel" scale="0.8 0.8 0.8" rotation="0 30 0"
+                animation="property: position; to: 0 10 0; dur: 1000; easing: easeOutQuad; loop: true; mirror: true; dir: alternate;"
+                ></a-entity>
+              </a-entity>
+              <script>
+                AFRAME.registerComponent('custom', {
+                    init: function () {
+                        this.el.sceneEl.renderer.toneMapping = THREE.ACESFilmicToneMapping
+                        this.el.addEventListener('model-loaded', this.modelLoaded.bind(this));
+                    },
+                    modelLoaded: function() {
+                        this.el.object3D.el.object3D.traverse(function(child) {
+                            if (child.isMesh && child.name === "Tube003_Water_0") {
+                              child.visible = false
+                            }
+                        })
+                    }
+                });
+              </script>
+        </a-scene>
+      </div>
+  </div>
+
+</body>
+</html>
